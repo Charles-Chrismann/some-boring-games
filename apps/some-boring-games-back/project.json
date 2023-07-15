@@ -1,0 +1,74 @@
+{
+  "name": "some-boring-games-back",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/some-boring-games-back/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "defaultConfiguration": "production",
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/apps/some-boring-games-back",
+        "main": "apps/some-boring-games-back/src/main.ts",
+        "tsConfig": "apps/some-boring-games-back/tsconfig.app.json",
+        "assets": [
+          "apps/some-boring-games-back/src/assets"
+        ],
+        "isolatedConfig": true,
+        "webpackConfig": "apps/some-boring-games-back/webpack.config.js"
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "some-boring-games-back:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "some-boring-games-back:build:development"
+        },
+        "production": {
+          "buildTarget": "some-boring-games-back:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": [
+        "{options.outputFile}"
+      ],
+      "options": {
+        "lintFilePatterns": [
+          "apps/some-boring-games-back/**/*.ts"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": [
+        "{workspaceRoot}/coverage/{projectRoot}"
+      ],
+      "options": {
+        "jestConfig": "apps/some-boring-games-back/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    }
+  },
+  "tags": []
+}
