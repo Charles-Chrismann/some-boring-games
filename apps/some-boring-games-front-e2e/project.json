@@ -1,0 +1,33 @@
+{
+  "name": "some-boring-games-front-e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/some-boring-games-front-e2e/src",
+  "projectType": "application",
+  "targets": {
+    "e2e": {
+      "executor": "@nx/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/some-boring-games-front-e2e/cypress.config.ts",
+        "devServerTarget": "some-boring-games-front:serve:development",
+        "testingType": "e2e"
+      },
+      "configurations": {
+        "production": {
+          "devServerTarget": "some-boring-games-front:serve:production"
+        },
+        "ci": {
+          "devServerTarget": "some-boring-games-front:serve-static"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/some-boring-games-front-e2e/**/*.{js,ts}"]
+      }
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["some-boring-games-front"]
+}

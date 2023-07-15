@@ -1,0 +1,81 @@
+{
+  "name": "some-boring-games-front",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/some-boring-games-front/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/vite:build",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "dist/apps/some-boring-games-front"
+      },
+      "configurations": {
+        "development": {
+          "mode": "development"
+        },
+        "production": {
+          "mode": "production"
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/vite:dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "some-boring-games-front:build",
+        "proxyConfig": "apps/some-boring-games-front/proxy.conf.js"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "some-boring-games-front:build:development",
+          "hmr": true
+        },
+        "production": {
+          "buildTarget": "some-boring-games-front:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "preview": {
+      "executor": "@nx/vite:preview-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "some-boring-games-front:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "some-boring-games-front:build:development"
+        },
+        "production": {
+          "buildTarget": "some-boring-games-front:build:production"
+        }
+      }
+    },
+    "test": {
+      "executor": "@nx/vite:test",
+      "outputs": ["coverage/apps/some-boring-games-front"],
+      "options": {
+        "passWithNoTests": true,
+        "reportsDirectory": "../../coverage/apps/some-boring-games-front"
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "apps/some-boring-games-front/**/*.{ts,tsx,js,jsx}"
+        ]
+      }
+    },
+    "serve-static": {
+      "executor": "@nx/web:file-server",
+      "options": {
+        "buildTarget": "some-boring-games-front:build"
+      }
+    }
+  },
+  "tags": []
+}
